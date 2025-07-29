@@ -1,104 +1,206 @@
-/* CSS Variables for Theme Management */
+/* CSS Variables for Tic Tac Toe Theme */
 :root {
-  /* Light theme colors */
+  --primary-color: #1e88e5;
+  --secondary-color: #43a047;
+  --accent-color: #fbc02d;
   --bg-primary: #ffffff;
   --bg-secondary: #f8f9fa;
   --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --text-secondary: #888888;
+  --border-color: #cfd8dc;
+  --btn-bg: var(--primary-color);
+  --btn-hover: #1565c0;
+  --square-size: 92px;
+  --square-size-mobile: 58px;
+  --win-shadow: 0 0 12px 2px var(--accent-color);
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
-}
-
-.App {
-  text-align: center;
-  background-color: var(--bg-primary);
+/* Responsive Container */
+.App.ttt-container {
+  min-height: 100vh;
+  background: var(--bg-primary);
   color: var(--text-primary);
-  min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
+  font-family: 'Segoe UI', 'Roboto', 'Oxygen', Arial, sans-serif;
+}
+.ttt-titlebar {
+  padding: 1.5rem 0 0.7rem 0;
+  background: var(--bg-secondary);
+}
+.ttt-title {
+  margin: 0;
+  text-align: center;
+  letter-spacing: 2px;
+  font-weight: 800;
+  font-size: 2.9rem;
+  line-height: 1;
+}
+.ttt-main {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 2vw 12px 0 12px;
+}
+
+/* Status Bar */
+.status-bar {
+  width: 100%;
+  min-height: 32px;
+  margin-bottom: 1.2rem;
+  padding: 7px 0;
+  border-radius: 8px 8px 0 0;
+  font-size: 1.2rem;
+  font-weight: 500;
+  background: linear-gradient(90deg, var(--bg-secondary) 65%, var(--accent-color) 120%);
+  color: var(--primary-color);
+  text-align: center;
+}
+
+/* Board */
+.ttt-board-wrapper {
+  width: 100%;
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
+  margin-bottom: 1.5rem;
 }
-
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, var(--square-size));
+  grid-template-rows: repeat(3, var(--square-size));
+  gap: 8px;
+  background: var(--bg-secondary);
+  border-radius: 18px;
+  box-shadow: 0 4px 24px 0 rgba(30,136,229,0.08);
+  padding: 14px;
 }
-
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 600;
+.square {
+  width: var(--square-size);
+  height: var(--square-size);
+  font-size: 2.4rem;
+  font-weight: 800;
+  border: 2.5px solid var(--border-color);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  outline: none;
+  transition: background 0.15s, border-color 0.18s, box-shadow 0.10s;
+  box-shadow: 0 1.5px 8px 0 rgba(67, 160, 71, 0.07);
+}
+.square--win {
+  background: var(--accent-color);
+  color: #fff;
+  border-color: var(--accent-color);
+  box-shadow: var(--win-shadow);
+  z-index: 1;
+}
+.square:disabled {
+  cursor: default;
+  background: var(--bg-secondary);
+  color: #bdbdbd;
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+.ttt-menu-art svg {
+  margin: 22px 0;
+  opacity: 0.18;
+  display: block;
 }
 
-.theme-toggle:active {
-  transform: translateY(0);
+/* Controls */
+.controls {
+  margin-top: 22px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.btn, .btn-primary, .btn-secondary, .btn-large {
+  border: none;
+  padding: 0.65em 1.5em;
+  font-size: 1.14em;
+  font-weight: 600;
+  border-radius: 12px;
+  background: var(--btn-bg);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 1.5px 8px 0 rgba(251, 192, 45, 0.07);
+  transition: background 0.14s, box-shadow 0.18s;
+  outline: none;
+  margin: 0.12em 0.25em;
+}
+.btn:active {
+  background: var(--btn-hover);
+}
+.btn-large {
+  padding: 0.88em 2.2em;
+  font-size: 1.27em;
+  background: var(--accent-color);
+  color: #fff;
+}
+.btn-primary {
+  background: var(--primary-color);
+}
+.btn-secondary {
+  background: var(--secondary-color);
+}
+.btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.footer {
+  width: 100%;
+  background: var(--bg-secondary);
+  padding: 1.1rem 0 0.8rem 0;
+  text-align: center;
+  border-radius: 0 0 7.5px 7.5px;
+  font-size: 0.98rem;
+}
+
+/* Responsive Styles */
+@media (max-width: 700px) {
+  .ttt-main {
+    max-width: 100vw;
+    padding: 10px 3vw 0 3vw;
   }
-  to {
-    transform: rotate(360deg);
+  .ttt-title {
+    font-size: 2.05rem;
+  }
+  .board {
+    grid-template-columns: repeat(3, var(--square-size-mobile));
+    grid-template-rows: repeat(3, var(--square-size-mobile));
+    padding: 7px;
+    gap: 4.5px;
+  }
+  .square, .square--win {
+    width: var(--square-size-mobile) !important;
+    height: var(--square-size-mobile) !important;
+    font-size: 1.4rem;
   }
 }
 
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+@media (max-width: 460px) {
+  .status-bar {
+    font-size: 0.98rem;
+    padding: 5px 0;
+  }
+  .btn-large {
+    font-size: 1.05em;
+    padding: 0.7em 0.85em;
+  }
+  .footer {
+    font-size: 0.9rem;
+    padding: 0.73rem 0 0.58rem 0;
   }
 }
+
+/* End */
